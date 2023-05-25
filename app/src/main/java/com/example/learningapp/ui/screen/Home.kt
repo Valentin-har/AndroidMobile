@@ -1,8 +1,12 @@
 package com.example.learningapp.ui.screen
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
@@ -19,6 +23,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SelectableChipColors
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -26,12 +31,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.learningapp.R
+import com.example.learningapp.ui.theme.Black80
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,7 +48,7 @@ fun Home(){
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Good Morning", color = MaterialTheme.colorScheme.onPrimary) },
+                title = { Text(text = "Bonjour", color = MaterialTheme.colorScheme.onPrimary) },
                 colors = TopAppBarDefaults.smallTopAppBarColors(
                     titleContentColor = MaterialTheme.colorScheme.primary,
                     containerColor = MaterialTheme.colorScheme.primary,
@@ -71,11 +78,11 @@ fun Home(){
         },
         bottomBar = {
             NavigationBar(
-                containerColor = MaterialTheme.colorScheme.primary
+                containerColor = Color.Transparent
             ) {
                 NavigationBarItem(
                     colors = NavigationBarItemDefaults.colors(
-                        selectedTextColor = MaterialTheme.colorScheme.onPrimary
+                        selectedTextColor = Color.White
                     ),
                     selected = true,
                     onClick = { },
@@ -83,11 +90,13 @@ fun Home(){
                     icon = { Icon(
                         painter = painterResource(id = R.drawable.ic_home),
                         contentDescription = "",
+                        tint = Color.White,
                     )
                     })
                 NavigationBarItem(
                     colors = NavigationBarItemDefaults.colors(
-                        selectedTextColor = MaterialTheme.colorScheme.onPrimary
+                        selectedTextColor = Color.White,
+                        indicatorColor = Color.Transparent
                     ),
                     selected = true,
                     onClick = { },
@@ -95,11 +104,13 @@ fun Home(){
                     icon = { Icon(
                         painter = painterResource(id = R.drawable.ic_search),
                         contentDescription = "",
+                        tint = Color.White,
                     )
                     })
                 NavigationBarItem(
                     colors = NavigationBarItemDefaults.colors(
-                        selectedTextColor = MaterialTheme.colorScheme.onPrimary
+                        selectedTextColor = Color.White,
+                        indicatorColor = Color.Transparent
                     ),
                     selected = true,
                     onClick = { },
@@ -107,6 +118,7 @@ fun Home(){
                     icon = { Icon(
                         painter = painterResource(id = R.drawable.ic_library),
                         contentDescription = "",
+                        tint = Color.White,
                     )
                     })
             }
@@ -114,7 +126,7 @@ fun Home(){
     ) {
         Column(modifier = Modifier
             .padding(it)
-            .padding(10.dp, 10.dp)) {
+            .padding(7.dp, 15.dp)) {
             LazyRow(modifier = Modifier.padding(5.dp, 0.dp)) {
                 items(list) {
                     ElevatedFilterChip(
@@ -125,54 +137,61 @@ fun Home(){
                     Spacer(modifier = Modifier.width(10.dp))
                 }
             }
-            Row() {
-                Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                    onClick = { /*TODO*/ }, modifier = Modifier.weight(1f),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 120.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Card(colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
+                    onClick = { /*TODO*/ }, modifier = Modifier.weight(1f).padding(0.dp, 5.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically){
-                        AsyncImage(model = ImageRequest.Builder(LocalContext.current).data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22").build(), contentDescription = "", modifier = Modifier.weight(0.25f))
-                        Text(text = "Flower", modifier = Modifier.weight(0.75f))
+                        AsyncImage(model = ImageRequest.Builder(LocalContext.current).data("https://img.freepik.com/photos-premium/icone-3d-coeur-bleu-isole-fond-blanc-illustration-3d_394271-5854.jpg").build(),
+                            contentDescription = "",
+                            modifier = Modifier.weight(0.30f)
+                        )
+                        Text(text = "   Titre likés", modifier = Modifier.weight(0.70f))
                     }
                 }
-                Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary), onClick = { /*TODO*/ }, modifier = Modifier.weight(1f)) {
+                Card(colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
+                    onClick = { /*TODO*/ }, modifier = Modifier.weight(1f).padding(5.dp, 5.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically){
-                        AsyncImage(model = ImageRequest.Builder(LocalContext.current).data("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKsUEgwtViD44DclyOLQVxGEPE-J-VZlDPYQ&usqp=CAU").build(), contentDescription = "", modifier = Modifier.weight(0.25f))
-                        Text(text = "Smile", modifier = Modifier.weight(0.75f))
-                    }
-                }
-            }
-            Row() {
-                Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary), onClick = { /*TODO*/ }, modifier = Modifier.weight(1f)) {
-                    Row(verticalAlignment = Alignment.CenterVertically){
-                        AsyncImage(model = ImageRequest.Builder(LocalContext.current).data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22").build(), contentDescription = "", modifier = Modifier.weight(0.25f))
-                        Text(text = "Flower", modifier = Modifier.weight(0.75f))
-                    }
-
-                }
-                Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary), onClick = { /*TODO*/ }, modifier = Modifier.weight(1f)) {
-                    Row(verticalAlignment = Alignment.CenterVertically){
-                        AsyncImage(model = ImageRequest.Builder(LocalContext.current).data("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKsUEgwtViD44DclyOLQVxGEPE-J-VZlDPYQ&usqp=CAU").build(), contentDescription = "", modifier = Modifier.weight(0.25f))
-                        Text(text = "Smile", modifier = Modifier.weight(0.75f))
+                        AsyncImage(model = ImageRequest.Builder(LocalContext.current).data("https://raplume.eu/wp-content/uploads/2021/09/PlaylistRap-1-770x770.jpg").build(), contentDescription = "", modifier = Modifier.weight(0.30f))
+                        Text(text = "   Playlist rap", modifier = Modifier.weight(0.70f))
                     }
                 }
             }
-            Row() {
-                Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary), onClick = { /*TODO*/ }, modifier = Modifier.weight(1f)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Card(colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
+                    onClick = { /*TODO*/ }, modifier = Modifier.weight(1f).padding(5.dp, 5.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically){
-                        AsyncImage(model = ImageRequest.Builder(LocalContext.current).data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22").build(), contentDescription = "", modifier = Modifier.weight(0.25f))
-                        Text(text = "Flower", modifier = Modifier.weight(0.75f))
+                        AsyncImage(model = ImageRequest.Builder(LocalContext.current).data("https://i.scdn.co/image/ab67706f000000029f66e905e5e5d71e5fda6e9e").build(), contentDescription = "", modifier = Modifier.weight(0.30f))
+                        Text(text = "   Playlist electro", modifier = Modifier.weight(0.70f))
                     }
 
                 }
-                Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary), onClick = { /*TODO*/ }, modifier = Modifier.weight(1f)) {
+                Card(colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
+                    onClick = { /*TODO*/ }, modifier = Modifier.weight(1f).padding(5.dp, 5.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically){
-                        AsyncImage(model = ImageRequest.Builder(LocalContext.current).data("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKsUEgwtViD44DclyOLQVxGEPE-J-VZlDPYQ&usqp=CAU").build(), contentDescription = "", modifier = Modifier.weight(0.25f))
-                        Text(text = "Smile", modifier = Modifier.weight(0.75f))
+                        AsyncImage(model = ImageRequest.Builder(LocalContext.current).data("https://i.scdn.co/image/ab67706f0000000237ddb11424d6babc80f304ac").build(), contentDescription = "", modifier = Modifier.weight(0.30f))
+                        Text(text = "   Playlist rock", modifier = Modifier.weight(0.70f))
+                    }
+                }
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Card(colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
+                    onClick = { /*TODO*/ }, modifier = Modifier.weight(1f).padding(5.dp, 5.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically){
+                        AsyncImage(model = ImageRequest.Builder(LocalContext.current).data("https://i.scdn.co/image/ab67706f000000022a2d103b23aeb9314c586e7b").build(), contentDescription = "", modifier = Modifier.weight(0.30f))
+                        Text(text = "   Playlist reggae", modifier = Modifier.weight(0.70f))
+                    }
+
+                }
+                Card(colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
+                    onClick = { /*TODO*/ }, modifier = Modifier.weight(1f).padding(5.dp, 5.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically){
+                        AsyncImage(model = ImageRequest.Builder(LocalContext.current).data("https://i.scdn.co/image/ab67706f000000026903496e5a845f3ad87125a2").build(), contentDescription = "", modifier = Modifier.weight(0.30f))
+                        Text(text = "   Radio", modifier = Modifier.weight(0.70f))
                     }
                 }
             }
             AsyncImage(model = ImageRequest.Builder(LocalContext.current).data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22").build(), contentDescription = "", modifier = Modifier
-                .weight(0.25f)
+                .weight(0.10f)
                 .clip(
                     CircleShape
                 ))

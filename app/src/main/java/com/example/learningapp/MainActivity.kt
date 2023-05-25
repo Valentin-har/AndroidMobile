@@ -70,8 +70,8 @@ class MainActivity : ComponentActivity() {
             })
 
             LearningAppTheme {
-                //Home()
-                SignUp()
+                Home()
+                //SignUp()
             }
 
         }
