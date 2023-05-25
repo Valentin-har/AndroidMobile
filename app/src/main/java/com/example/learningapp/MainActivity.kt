@@ -67,17 +67,6 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             LaunchedEffect(key1 = Unit, block = {
-                firebaseAuth
-                    .createUserWithEmailAndPassword("test@gmail.com", "test1234")
-                    .addOnCompleteListener {
-                        if(it.isSuccessful){
-
-                        }else if(it.isCanceled){
-
-                        }
-                    }.addOnFailureListener {
-
-                    }
             })
 
             LearningAppTheme {
