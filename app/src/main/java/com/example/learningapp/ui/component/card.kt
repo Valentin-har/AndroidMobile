@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,7 +35,7 @@ fun CategoryCard(
         colors = CardDefaults.cardColors(containerColor = cardColor),
         modifier = modifier
     ) {
-        Row(modifier = Modifier.fillMaxHeight()) {
+        Row(modifier = Modifier.fillMaxHeight().fillMaxWidth()) {
             Text(
                 text = cardText,
                 color = Color.White,

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -64,7 +65,8 @@ val categoryTitle = mutableListOf<String>(
     "Rock",
     "Découvertes",
     "Radio",
-    "Indie"
+    "Indie",
+    "Rock"
 )
 
 val categoryTitleUsed = mutableListOf<String>()
@@ -212,6 +214,23 @@ fun Search() {
                                 .padding(end = 10.dp)
                                 .weight(1f)
                         )
+                    }
+                }
+                if (categoryTitle.size % 2 == 1) {
+                    items(1) {
+                        Row(
+                            modifier = Modifier
+                                .padding(top = 10.dp, bottom = 10.dp)
+                        ) {
+                            CategoryCard(
+                                cardColor = selectColor(colorList, colorUsed),
+                                cardText = setCategoryTitle(categoryTitle, categoryTitleUsed),
+                                modifier = Modifier
+                                    .height(80.dp)
+                                    .padding(end = 10.dp)
+                                    .fillMaxWidth(fraction= 0.5f)
+                            )
+                        }
                     }
                 }
             }
