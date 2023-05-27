@@ -1,20 +1,13 @@
 package com.example.learningapp.ui.screen
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,61 +21,111 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.example.learningapp.R
+import com.example.learningapp.ui.component.CategoryCard
 
+val colorList = mutableListOf<Color>(
+    Color(0xFFE13301),
+    Color(0xFF7358ff),
+    Color(0xFFea115f),
+    Color(0xFFbe5901),
+    Color(0xFF158807),
+    Color(0xFF212e74),
+    Color(0xFF27856a),
+    Color(0xFF7b4c32),
+    Color(0xFF503651),
+    Color(0xFFd9138a),
+    Color(0xFFed1d33),
+    Color(0xFFa46651),
+    Color(0xFF375b6b),
+    Color(0xFFd84000),
+    Color(0xFF0d73ef),
+    Color(0xFF891931),
+    Color(0xFFb21147),
+)
+
+val categoryTitle = mutableListOf<String>(
+    "Podcasts",
+    "Événéments live",
+    "Conçu spécialement pour vous",
+    "Dernières sorties",
+    "Hip-Hop",
+    "Pop",
+    "Variété Française",
+    "Été",
+    "Classements",
+    "Latino",
+    "Ambiance",
+    "Dance/Électro",
+    "Rock",
+    "Découvertes",
+    "Radio",
+    "Indie"
+)
+
+val categoryTitleUsed = mutableListOf<String>()
+val colorUsed = mutableListOf<Color>()
+
+fun selectColor(color: MutableList<Color>, colorUsed: MutableList<Color>): Color {
+    if (color.size == 0) {
+        color.addAll(colorUsed)
+        colorUsed.clear()
+    }
+    val pickedColor = color.random()
+    color.remove(pickedColor)
+    colorUsed.add(pickedColor)
+    println(pickedColor)
+    return pickedColor
+}
+
+fun setCategoryTitle(title: MutableList<String>, titleUsed: MutableList<String>): String {
+    if (title.size == 0) {
+        title.addAll(titleUsed)
+        titleUsed.clear()
+    }
+    val pickedTitle = title.random()
+    title.remove(pickedTitle)
+    titleUsed.add(pickedTitle)
+    println(pickedTitle)
+    return pickedTitle
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Search() {
-    val list = listOf<Color>(
-        Color(0xFFE13301),
-        Color(0xFF7358ff),
-        Color(0xFF1e3264),
-        Color(0xFFea115f),
-        Color(0xFFbe5901),
-        Color(0xFF158807),
-        Color(0xFF212e74),
-        Color(0xFF27856a),
-        Color(0xFFce1283),
-    )
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "Rechercher", color = MaterialTheme.colorScheme.onPrimary) },
-                colors = TopAppBarDefaults.smallTopAppBarColors(
-                    titleContentColor = MaterialTheme.colorScheme.primary,
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    actionIconContentColor = MaterialTheme.colorScheme.onPrimary
-                ),
-                actions = {
-                    IconButton(onClick = { }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_photo),
-                            contentDescription = ""
-                        )
-                    }
-                }
+    Scaffold(topBar = {
+        TopAppBar(title = {
+            Text(
+                text = "Rechercher",
+                color = MaterialTheme.colorScheme.onPrimary
             )
         },
+            colors = TopAppBarDefaults.smallTopAppBarColors(
+                titleContentColor = MaterialTheme.colorScheme.primary,
+                containerColor = MaterialTheme.colorScheme.primary,
+                actionIconContentColor = MaterialTheme.colorScheme.onPrimary
+            ),
+            actions = {
+                IconButton(onClick = { }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_photo),
+                        contentDescription = ""
+                    )
+                }
+            })
+    },
         bottomBar = {
             NavigationBar(
-                containerColor = MaterialTheme.colorScheme.primary
+                containerColor = Color.Transparent
             ) {
                 NavigationBarItem(
                     colors = NavigationBarItemDefaults.colors(
-                        selectedTextColor = MaterialTheme.colorScheme.onPrimary
+                        selectedTextColor = Color.White,
+                        indicatorColor = Color.Transparent
                     ),
                     selected = true,
                     onClick = { },
@@ -91,11 +134,12 @@ fun Search() {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_home),
                             contentDescription = "",
+                            tint = Color.White,
                         )
                     })
                 NavigationBarItem(
                     colors = NavigationBarItemDefaults.colors(
-                        selectedTextColor = MaterialTheme.colorScheme.onPrimary
+                        selectedTextColor = Color.White,
                     ),
                     selected = true,
                     onClick = { },
@@ -104,11 +148,13 @@ fun Search() {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_search),
                             contentDescription = "",
+                            tint = Color.White,
                         )
                     })
                 NavigationBarItem(
                     colors = NavigationBarItemDefaults.colors(
-                        selectedTextColor = MaterialTheme.colorScheme.onPrimary
+                        selectedTextColor = Color.White,
+                        indicatorColor = Color.Transparent
                     ),
                     selected = true,
                     onClick = { },
@@ -117,11 +163,11 @@ fun Search() {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_library),
                             contentDescription = "",
+                            tint = Color.White,
                         )
                     })
             }
-        }
-    ) {
+        }) {
         Column(
             modifier = Modifier
                 .padding(it)
@@ -131,8 +177,7 @@ fun Search() {
                 .padding(0.dp, 10.dp)
                 .fillMaxWidth(),
                 value = "",
-                onValueChange = {
-                },
+                onValueChange = {},
                 placeholder = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_search),
@@ -144,642 +189,28 @@ fun Search() {
                     )
                 })
             Text(text = "Parcourir tout", modifier = Modifier.padding(0.dp, 5.dp))
-            Row(
-                modifier = Modifier
-                    .padding(top = 10.dp, bottom = 10.dp)
-                    .fillMaxWidth()
-            ) {
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = list.random()),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(80.dp)
-                        .padding(end = 10.dp)
-                ) {
-                    Row(modifier = Modifier.fillMaxHeight()) {
-                        Text(
-                            text = "Flower",
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
+            LazyColumn() {
+                items(categoryTitle.size / 2) {
+                    Row(
+                        modifier = Modifier
+                            .padding(top = 10.dp, bottom = 10.dp)
+                            .fillMaxWidth()
+                    ) {
+                        CategoryCard(
+                            cardColor = selectColor(colorList, colorUsed),
+                            cardText = setCategoryTitle(categoryTitle, categoryTitleUsed),
                             modifier = Modifier
-                                .weight(0.6f)
-                                .padding(start = 10.dp, top = 10.dp)
+                                .size(80.dp)
+                                .padding(end = 10.dp)
+                                .weight(1f)
                         )
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                                .build(),
-                            contentDescription = "",
+                        CategoryCard(
+                            cardColor = selectColor(colorList, colorUsed),
+                            cardText = setCategoryTitle(categoryTitle, categoryTitleUsed),
                             modifier = Modifier
-                                .weight(0.4f)
-                                .align(
-                                    Alignment.Bottom
-                                )
-                                .padding(start = 20.dp)
-                                .offset(20.dp, 20.dp)
-                                .rotate(30f)
-                                .size(100.dp)
-                                .clip(
-                                    RoundedCornerShape(10.dp)
-                                )
-                        )
-                    }
-                }
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = list.random()),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(80.dp)
-                        .padding(end = 10.dp)
-                ) {
-                    Row(modifier = Modifier.fillMaxHeight()) {
-                        Text(
-                            text = "Flower",
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .weight(0.6f)
-                                .padding(start = 10.dp, top = 10.dp)
-                        )
-                        Column(verticalArrangement = Arrangement.Bottom, modifier = Modifier.weight(0.4f).fillMaxHeight()){
-                            AsyncImage(
-                                model = ImageRequest.Builder(LocalContext.current)
-                                    .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                                    .build(),
-                                contentDescription = "",
-                                modifier = Modifier
-                                    .padding(start = 20.dp)
-                                    .rotate(30f)
-                                    .aspectRatio(1f)
-                                    .clip(
-                                        RoundedCornerShape(12.dp)
-                                    ),
-                                contentScale = ContentScale.Crop
-
-                            )
-                        }
-
-                    }
-                }
-            }
-            Row(
-                modifier = Modifier
-                    .padding(top = 10.dp, bottom = 10.dp)
-                    .fillMaxWidth()
-            ) {
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = list.random()),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(80.dp)
-                        .padding(end = 10.dp)
-                ) {
-                    Row(modifier = Modifier.fillMaxHeight()) {
-                        Text(
-                            text = "Flower",
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .weight(0.6f)
-                                .padding(start = 10.dp, top = 10.dp)
-                        )
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                                .build(),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .weight(0.4f)
-                                .align(
-                                    Alignment.Bottom
-                                )
-                                .padding(start = 20.dp)
-                                .rotate(30f)
-                                .width(100.dp)
-                                .height(100.dp)
-                                .clip(
-                                    RoundedCornerShape(20.dp)
-                                )
-                        )
-                    }
-                }
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = list.random()),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(80.dp)
-                        .padding(end = 10.dp)
-                ) {
-                    Row(modifier = Modifier.fillMaxHeight()) {
-                        Text(
-                            text = "Flower",
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .weight(0.6f)
-                                .padding(start = 10.dp, top = 10.dp)
-                        )
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                                .build(),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .weight(0.4f)
-                                .align(
-                                    Alignment.Bottom
-                                )
-                                .padding(start = 20.dp)
-                                .rotate(30f)
-                                .width(100.dp)
-                                .height(100.dp)
-                                .clip(
-                                    RoundedCornerShape(20.dp)
-                                )
-                        )
-                    }
-                }
-            }
-            Row(
-                modifier = Modifier
-                    .padding(top = 10.dp, bottom = 10.dp)
-                    .fillMaxWidth()
-            ) {
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = list.random()),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(80.dp)
-                        .padding(end = 10.dp)
-                ) {
-                    Row(modifier = Modifier.fillMaxHeight()) {
-                        Text(
-                            text = "Flower",
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .weight(0.6f)
-                                .padding(start = 10.dp, top = 10.dp)
-                        )
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                                .build(),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .weight(0.4f)
-                                .align(
-                                    Alignment.Bottom
-                                )
-                                .padding(start = 20.dp)
-                                .rotate(30f)
-                                .width(100.dp)
-                                .height(100.dp)
-                                .clip(
-                                    RoundedCornerShape(20.dp)
-                                )
-                        )
-                    }
-                }
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = list.random()),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(80.dp)
-                        .padding(end = 10.dp)
-                ) {
-                    Row(modifier = Modifier.fillMaxHeight()) {
-                        Text(
-                            text = "Flower",
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .weight(0.6f)
-                                .padding(start = 10.dp, top = 10.dp)
-                        )
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                                .build(),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .weight(0.4f)
-                                .align(
-                                    Alignment.Bottom
-                                )
-                                .padding(start = 20.dp)
-                                .rotate(30f)
-                                .width(100.dp)
-                                .height(100.dp)
-                                .clip(
-                                    RoundedCornerShape(20.dp)
-                                )
-                        )
-                    }
-                }
-            }
-            Row(
-                modifier = Modifier
-                    .padding(top = 10.dp, bottom = 10.dp)
-                    .fillMaxWidth()
-            ) {
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = list.random()),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(80.dp)
-                        .padding(end = 10.dp)
-                ) {
-                    Row(modifier = Modifier.fillMaxHeight()) {
-                        Text(
-                            text = "Flower",
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .weight(0.6f)
-                                .padding(start = 10.dp, top = 10.dp)
-                        )
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                                .build(),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .weight(0.4f)
-                                .align(
-                                    Alignment.Bottom
-                                )
-                                .padding(start = 20.dp)
-                                .rotate(30f)
-                                .width(100.dp)
-                                .height(100.dp)
-                                .clip(
-                                    RoundedCornerShape(20.dp)
-                                )
-                        )
-                    }
-                }
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = list.random()),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(80.dp)
-                        .padding(end = 10.dp)
-                ) {
-                    Row(modifier = Modifier.fillMaxHeight()) {
-                        Text(
-                            text = "Flower",
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .weight(0.6f)
-                                .padding(start = 10.dp, top = 10.dp)
-                        )
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                                .build(),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .weight(0.4f)
-                                .align(
-                                    Alignment.Bottom
-                                )
-                                .padding(start = 20.dp)
-                                .rotate(30f)
-                                .width(100.dp)
-                                .height(100.dp)
-                                .clip(
-                                    RoundedCornerShape(20.dp)
-                                )
-                        )
-                    }
-                }
-            }
-            Row(
-                modifier = Modifier
-                    .padding(top = 10.dp, bottom = 10.dp)
-                    .fillMaxWidth()
-            ) {
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = list.random()),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(80.dp)
-                        .padding(end = 10.dp)
-                ) {
-                    Row(modifier = Modifier.fillMaxHeight()) {
-                        Text(
-                            text = "Flower",
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .weight(0.6f)
-                                .padding(start = 10.dp, top = 10.dp)
-                        )
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                                .build(),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .weight(0.4f)
-                                .align(
-                                    Alignment.Bottom
-                                )
-                                .padding(start = 20.dp)
-                                .rotate(30f)
-                                .width(100.dp)
-                                .height(100.dp)
-                                .clip(
-                                    RoundedCornerShape(20.dp)
-                                )
-                        )
-                    }
-                }
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = list.random()),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(80.dp)
-                        .padding(end = 10.dp)
-                ) {
-                    Row(modifier = Modifier.fillMaxHeight()) {
-                        Text(
-                            text = "Flower",
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .weight(0.6f)
-                                .padding(start = 10.dp, top = 10.dp)
-                        )
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                                .build(),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .weight(0.4f)
-                                .align(
-                                    Alignment.Bottom
-                                )
-                                .padding(start = 20.dp)
-                                .rotate(30f)
-                                .width(100.dp)
-                                .height(100.dp)
-                                .clip(
-                                    RoundedCornerShape(20.dp)
-                                )
-                        )
-                    }
-                }
-            }
-            Row(
-                modifier = Modifier
-                    .padding(top = 10.dp, bottom = 10.dp)
-                    .fillMaxWidth()
-            ) {
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = list.random()),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(80.dp)
-                        .padding(end = 10.dp)
-                ) {
-                    Row(modifier = Modifier.fillMaxHeight()) {
-                        Text(
-                            text = "Flower",
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .weight(0.6f)
-                                .padding(start = 10.dp, top = 10.dp)
-                        )
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                                .build(),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .weight(0.4f)
-                                .align(
-                                    Alignment.Bottom
-                                )
-                                .padding(start = 20.dp)
-                                .rotate(30f)
-                                .width(100.dp)
-                                .height(100.dp)
-                                .clip(
-                                    RoundedCornerShape(20.dp)
-                                )
-                        )
-                    }
-                }
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = list.random()),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(80.dp)
-                        .padding(end = 10.dp)
-                ) {
-                    Row(modifier = Modifier.fillMaxHeight()) {
-                        Text(
-                            text = "Flower",
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .weight(0.6f)
-                                .padding(start = 10.dp, top = 10.dp)
-                        )
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                                .build(),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .weight(0.4f)
-                                .align(
-                                    Alignment.Bottom
-                                )
-                                .padding(start = 20.dp)
-                                .rotate(30f)
-                                .width(100.dp)
-                                .height(100.dp)
-                                .clip(
-                                    RoundedCornerShape(20.dp)
-                                )
-                        )
-                    }
-                }
-            }
-            Row(
-                modifier = Modifier
-                    .padding(top = 10.dp, bottom = 10.dp)
-                    .fillMaxWidth()
-            ) {
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = list.random()),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(80.dp)
-                        .padding(end = 10.dp)
-                ) {
-                    Row(modifier = Modifier.fillMaxHeight()) {
-                        Text(
-                            text = "Flower",
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .weight(0.6f)
-                                .padding(start = 10.dp, top = 10.dp)
-                        )
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                                .build(),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .weight(0.4f)
-                                .align(
-                                    Alignment.Bottom
-                                )
-                                .padding(start = 20.dp)
-                                .rotate(30f)
-                                .width(100.dp)
-                                .height(100.dp)
-                                .clip(
-                                    RoundedCornerShape(20.dp)
-                                )
-                        )
-                    }
-                }
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = list.random()),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(80.dp)
-                        .padding(end = 10.dp)
-                ) {
-                    Row(modifier = Modifier.fillMaxHeight()) {
-                        Text(
-                            text = "Flower",
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .weight(0.6f)
-                                .padding(start = 10.dp, top = 10.dp)
-                        )
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                                .build(),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .weight(0.4f)
-                                .align(
-                                    Alignment.Bottom
-                                )
-                                .padding(start = 20.dp)
-                                .rotate(30f)
-                                .width(100.dp)
-                                .height(100.dp)
-                                .clip(
-                                    RoundedCornerShape(20.dp)
-                                )
-                        )
-                    }
-                }
-            }
-            Row(
-                modifier = Modifier
-                    .padding(top = 10.dp, bottom = 10.dp)
-                    .fillMaxWidth()
-            ) {
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = list.random()),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(80.dp)
-                        .padding(end = 10.dp)
-                ) {
-                    Row(modifier = Modifier.fillMaxHeight()) {
-                        Text(
-                            text = "Flower",
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .weight(0.6f)
-                                .padding(start = 10.dp, top = 10.dp)
-                        )
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                                .build(),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .weight(0.4f)
-                                .align(
-                                    Alignment.Bottom
-                                )
-                                .padding(start = 20.dp)
-                                .rotate(30f)
-                                .width(100.dp)
-                                .height(100.dp)
-                                .clip(
-                                    RoundedCornerShape(20.dp)
-                                )
-                        )
-                    }
-                }
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = list.random()),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(80.dp)
-                        .padding(end = 10.dp)
-                ) {
-                    Row(modifier = Modifier.fillMaxHeight()) {
-                        Text(
-                            text = "Flower",
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .weight(0.6f)
-                                .padding(start = 10.dp, top = 10.dp)
-                        )
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                                .build(),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .weight(0.4f)
-                                .align(
-                                    Alignment.Bottom
-                                )
-                                .padding(start = 20.dp)
-                                .rotate(30f)
-                                .width(100.dp)
-                                .height(100.dp)
-                                .clip(
-                                    RoundedCornerShape(12.dp)
-                                )
+                                .size(80.dp)
+                                .padding(end = 10.dp)
+                                .weight(1f)
                         )
                     }
                 }
