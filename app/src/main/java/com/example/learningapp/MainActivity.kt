@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.learningapp.ui.screen.Home
+import com.example.learningapp.ui.screen.Search
 import com.example.learningapp.ui.screen.SignUp
 import com.example.learningapp.ui.theme.LearningAppTheme
 import com.google.firebase.auth.ktx.auth
@@ -70,8 +71,9 @@ class MainActivity : ComponentActivity() {
             })
 
             LearningAppTheme {
+                Search()
                 //Home()
-                SignUp()
+                //SignUp()
             }
 
         }

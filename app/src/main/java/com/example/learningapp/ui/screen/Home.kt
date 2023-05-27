@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -130,7 +131,7 @@ fun Home(){
                     onClick = { /*TODO*/ }, modifier = Modifier.weight(1f),
                     elevation = CardDefaults.cardElevation(defaultElevation = 120.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically){
-                        AsyncImage(model = ImageRequest.Builder(LocalContext.current).data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22").build(), contentDescription = "", modifier = Modifier.weight(0.25f))
+                        AsyncImage(model = ImageRequest.Builder(LocalContext.current).data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22").build(), contentDescription = "", modifier = Modifier.weight(0.25f).rotate(45f))
                         Text(text = "Flower", modifier = Modifier.weight(0.75f))
                     }
                 }
