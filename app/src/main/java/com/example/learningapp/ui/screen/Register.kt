@@ -32,6 +32,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.learningapp.R
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.ktx.auth
@@ -41,13 +42,11 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun Register() {
+fun Register( _snackBar:SnackbarHostState,navController: NavHostController) {
     //val keybord= remember {
         //LocalSoftwareKeyboardController.current
     //}
-    val _snackBar = remember {
-        SnackbarHostState()
-    }
+
     val coroutineScope= rememberCoroutineScope()
     val _emailTextFieldValue = remember {
         mutableStateOf(TextFieldValue(""))
@@ -64,10 +63,8 @@ fun Register() {
     val _pasWordError = remember {
         mutableStateOf(false)
     }
-    Scaffold(snackbarHost={ SnackbarHost(hostState = _snackBar)}) {
         Column(
             modifier = Modifier
-                .padding(it)
                 .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -111,6 +108,7 @@ fun Register() {
                     ).addOnCompleteListener {
                         if (it.isSuccessful) {
 
+                            navController.navigate("home")
                         } else if (it.isCanceled) {}
                         else{
                             val emailErrorInvalid=(it.exception as FirebaseAuthInvalidCredentialsException).errorCode=="ERROR_INVALID_EMAIL";
@@ -127,8 +125,13 @@ fun Register() {
             ) {
                 Text(text = "Enregistrer")
             }
+            Button(onClick = {
+                navController.navigate("login")
+            }
+            ) {
+                Text(text = "se connecter ?")
+            }
         }
-    }
 }
 
 

@@ -32,6 +32,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.learningapp.R
 import com.example.learningapp.ui.theme.LearningAppTheme
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -41,87 +44,29 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUp(){
+fun SignUp() {
     val _snackBar = remember {
         SnackbarHostState()
     }
-    val coroutineScope= rememberCoroutineScope()
+    val navController = rememberNavController();
 
-    val _emailTextFieldValue = remember {
-        mutableStateOf(TextFieldValue(""))
-    }
-    val _passwordTextFieldValue = remember {
-        mutableStateOf(TextFieldValue(""))
-    }
-    val _emailError = remember {
-        mutableStateOf(false)
-    }
-    val _pasWordError = remember {
-        mutableStateOf(false)
-    }
 
-    Scaffold(snackbarHost={ SnackbarHost(hostState = _snackBar) }){
-        Column(modifier = Modifier
-            .padding(it)
-            .fillMaxSize()
-            , verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-            IconButton(onClick = { }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_signin),
-                    contentDescription = ""
-                )
+    Scaffold(snackbarHost = { SnackbarHost(hostState = _snackBar) }) {
+        NavHost(
+            navController = navController,
+            startDestination = "login",
+            modifier = Modifier.padding(it)
+        ) {
+            composable("login") {
+
+                Login(_snackBar = _snackBar,navController)
             }
-
-            TextField(modifier = Modifier.padding(0.dp,10.dp),value = _emailTextFieldValue.value, onValueChange = {
-                _emailTextFieldValue.value = it
-            },
-                placeholder = {
-                    Text(text = "Email")
-                }, isError = _emailError.value)
-
-            TextField(modifier = Modifier.padding(0.dp,10.dp),value = _passwordTextFieldValue.value, visualTransformation = PasswordVisualTransformation(),onValueChange = {
-                _passwordTextFieldValue.value = it
-            },
-                placeholder = {
-                    Text(text = "Mot de passe")
-                }, isError = _pasWordError.value)
-
-
-            Button(onClick = {
-                _pasWordError.value = (_passwordTextFieldValue.value.text.length < 6)
-
-                _emailError.value = (_emailTextFieldValue.value.text == "" )
-                if (!_emailError.value && !_pasWordError.value) {
-                    val firebaseAuth = Firebase.auth;
-                    firebaseAuth.signInWithEmailAndPassword(
-                        _emailTextFieldValue.value.text, _passwordTextFieldValue.value.text
-                    ).addOnCompleteListener {
-                        if (it.isSuccessful) {
-
-                        } else if (it.isCanceled) {}
-                        else{
-                            val emailErrorInvalid=(it.exception as FirebaseAuthInvalidCredentialsException).errorCode=="ERROR_INVALID_EMAIL";
-                            _emailError.value=emailErrorInvalid;
-                            coroutineScope.launch {
-                                _snackBar.showSnackbar("not valid mail",null,false,
-                                    SnackbarDuration.Short)
-                            }
-                            //keybord.current=false
-
-                        }
-                    }
-                }
-            }){
-                Text(text = "connection")
+            composable("register") {
+                Register(_snackBar = _snackBar,navController)
             }
-            Button(onClick = {
-
-                }
-
-
-
-            ){
-                Text(text = "S'enregistrer ?");
+            composable("home") {
+                Home()
             }
-    }}
+        }
+    }
 }
