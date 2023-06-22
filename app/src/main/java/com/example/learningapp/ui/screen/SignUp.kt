@@ -1,7 +1,10 @@
 package com.example.learningapp.ui.screen
 
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+
+import com.example.learningapp.ui.screen.Register
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -10,6 +13,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import com.example.learningapp.MainActivity
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -23,11 +27,13 @@ import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.learningapp.R
+import com.example.learningapp.ui.theme.LearningAppTheme
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -106,8 +112,16 @@ fun SignUp(){
                     }
                 }
             }){
-                Text(text = "Enregistrer")
+                Text(text = "connection")
             }
-        }
-    }
+            Button(onClick = {
+
+                }
+
+
+
+            ){
+                Text(text = "S'enregistrer ?");
+            }
+    }}
 }
