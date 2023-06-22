@@ -4,10 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -99,138 +97,65 @@ fun setCategoryTitle(title: MutableList<String>, titleUsed: MutableList<String>)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Search() {
-    Scaffold(topBar = {
-        TopAppBar(title = {
-            Text(
-                text = "Rechercher",
-                color = MaterialTheme.colorScheme.onPrimary
-            )
-        },
-            colors = TopAppBarDefaults.smallTopAppBarColors(
-                titleContentColor = MaterialTheme.colorScheme.primary,
-                containerColor = MaterialTheme.colorScheme.primary,
-                actionIconContentColor = MaterialTheme.colorScheme.onPrimary
-            ),
-            actions = {
-                IconButton(onClick = { }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_photo),
-                        contentDescription = ""
+    Column(
+        modifier = Modifier
+            .padding(10.dp, 10.dp)
+    ) {
+        TextField(modifier = Modifier
+            .padding(0.dp, 10.dp)
+            .fillMaxWidth(),
+            value = "",
+            onValueChange = {},
+            placeholder = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_search),
+                    contentDescription = "",
+                )
+                Text(
+                    text = "Que souhaitez-vous écouter ?",
+                    modifier = Modifier.padding(30.dp, 0.dp)
+                )
+            })
+        Text(text = "Parcourir tout", modifier = Modifier.padding(0.dp, 5.dp))
+        LazyColumn() {
+            items(categoryTitle.size / 2) {
+                Row(
+                    modifier = Modifier
+                        .padding(top = 10.dp, bottom = 10.dp)
+                        .fillMaxWidth()
+                ) {
+                    CategoryCard(
+                        cardColor = selectColor(colorList, colorUsed),
+                        cardText = setCategoryTitle(categoryTitle, categoryTitleUsed),
+                        modifier = Modifier
+                            .size(80.dp)
+                            .padding(end = 10.dp)
+                            .weight(1f)
+                    )
+                    CategoryCard(
+                        cardColor = selectColor(colorList, colorUsed),
+                        cardText = setCategoryTitle(categoryTitle, categoryTitleUsed),
+                        modifier = Modifier
+                            .size(80.dp)
+                            .padding(end = 10.dp)
+                            .weight(1f)
                     )
                 }
-            })
-    },
-        bottomBar = {
-            NavigationBar(
-                containerColor = Color.Transparent
-            ) {
-                NavigationBarItem(
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedTextColor = Color.White,
-                        indicatorColor = Color.Transparent
-                    ),
-                    selected = true,
-                    onClick = { },
-                    label = { Text(text = "Accueil") },
-                    icon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_home),
-                            contentDescription = "",
-                            tint = Color.White,
-                        )
-                    })
-                NavigationBarItem(
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedTextColor = Color.White,
-                    ),
-                    selected = true,
-                    onClick = { },
-                    label = { Text(text = "Rechercher") },
-                    icon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_search),
-                            contentDescription = "",
-                            tint = Color.White,
-                        )
-                    })
-                NavigationBarItem(
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedTextColor = Color.White,
-                        indicatorColor = Color.Transparent
-                    ),
-                    selected = true,
-                    onClick = { },
-                    label = { Text(text = "Bibliothèque") },
-                    icon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_library),
-                            contentDescription = "",
-                            tint = Color.White,
-                        )
-                    })
             }
-        }) {
-        Column(
-            modifier = Modifier
-                .padding(it)
-                .padding(10.dp, 10.dp)
-        ) {
-            TextField(modifier = Modifier
-                .padding(0.dp, 10.dp)
-                .fillMaxWidth(),
-                value = "",
-                onValueChange = {},
-                placeholder = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_search),
-                        contentDescription = "",
-                    )
-                    Text(
-                        text = "Que souhaitez-vous écouter ?",
-                        modifier = Modifier.padding(30.dp, 0.dp)
-                    )
-                })
-            Text(text = "Parcourir tout", modifier = Modifier.padding(0.dp, 5.dp))
-            LazyColumn() {
-                items(categoryTitle.size / 2) {
+            if (categoryTitle.size % 2 == 1) {
+                items(1) {
                     Row(
                         modifier = Modifier
                             .padding(top = 10.dp, bottom = 10.dp)
-                            .fillMaxWidth()
                     ) {
                         CategoryCard(
                             cardColor = selectColor(colorList, colorUsed),
                             cardText = setCategoryTitle(categoryTitle, categoryTitleUsed),
                             modifier = Modifier
-                                .size(80.dp)
+                                .height(80.dp)
                                 .padding(end = 10.dp)
-                                .weight(1f)
+                                .fillMaxWidth(fraction= 0.5f)
                         )
-                        CategoryCard(
-                            cardColor = selectColor(colorList, colorUsed),
-                            cardText = setCategoryTitle(categoryTitle, categoryTitleUsed),
-                            modifier = Modifier
-                                .size(80.dp)
-                                .padding(end = 10.dp)
-                                .weight(1f)
-                        )
-                    }
-                }
-                if (categoryTitle.size % 2 == 1) {
-                    items(1) {
-                        Row(
-                            modifier = Modifier
-                                .padding(top = 10.dp, bottom = 10.dp)
-                        ) {
-                            CategoryCard(
-                                cardColor = selectColor(colorList, colorUsed),
-                                cardText = setCategoryTitle(categoryTitle, categoryTitleUsed),
-                                modifier = Modifier
-                                    .height(80.dp)
-                                    .padding(end = 10.dp)
-                                    .fillMaxWidth(fraction= 0.5f)
-                            )
-                        }
                     }
                 }
             }

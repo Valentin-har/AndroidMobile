@@ -119,7 +119,7 @@ fun Register() {
                                 _snackBar.showSnackbar("not valid mail",null,false,SnackbarDuration.Short)
                             }
                             //keybord.current=false
-                            
+
                         }
                     }
                 }

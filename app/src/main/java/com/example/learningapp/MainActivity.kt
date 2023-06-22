@@ -71,9 +71,7 @@ class MainActivity : ComponentActivity() {
             })
 
             LearningAppTheme {
-                Search()
-                //Home()
-                //SignUp()
+                Home()
             }
 
         }
