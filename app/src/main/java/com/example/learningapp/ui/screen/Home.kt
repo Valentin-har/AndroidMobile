@@ -13,6 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -20,16 +22,48 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.learningapp.R
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Home(){
+
+    var homeSelect=remember{
+        mutableStateOf<Int>(1)
+    }
+    var searchSelect=remember{
+        mutableStateOf<Int>(0)
+    }
+    var biblioSelect=remember{
+        mutableStateOf<Int>(0)
+    }
+    val firebaseAuth = Firebase.auth;
+    fun changeSelect(name:String){
+        when(name){
+            "home"-> {
+                homeSelect.value=1
+                searchSelect.value=0
+                biblioSelect.value=0
+            }
+            "search"->{
+                homeSelect.value=0
+                searchSelect.value=1
+                biblioSelect.value=0
+            }
+            "biblio"->{
+                homeSelect.value=0
+                searchSelect.value=0
+                biblioSelect.value=1
+            }
+        }
+    }
     val navController = rememberNavController();
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Bonjour", color = MaterialTheme.colorScheme.onPrimary) },
+                title = { Text(text = "Bonjour "+firebaseAuth.currentUser?.email!!.split('@')[0], color = MaterialTheme.colorScheme.onPrimary) },
                 colors = TopAppBarDefaults.smallTopAppBarColors(
                     titleContentColor = MaterialTheme.colorScheme.primary,
                     containerColor = MaterialTheme.colorScheme.primary,
@@ -69,8 +103,9 @@ fun Home(){
                     colors = NavigationBarItemDefaults.colors(
                         selectedTextColor = Color.White
                     ),
-                    selected = true,
+                    selected = homeSelect.value==1,
                     onClick = {
+                        changeSelect("home")
                         navController.navigate("home")
                     },
                     label = { Text(text = "Accueil") },
@@ -82,11 +117,11 @@ fun Home(){
                     })
                 NavigationBarItem(
                     colors = NavigationBarItemDefaults.colors(
-                        selectedTextColor = Color.White,
-                        indicatorColor = Color.Transparent
+                        selectedTextColor = Color.White
                     ),
-                    selected = true,
+                    selected = searchSelect.value==1,
                     onClick = {
+                        changeSelect("search")
                         navController.navigate("search")
                     },
                     label = { Text(text = "Rechercher") },
@@ -98,11 +133,11 @@ fun Home(){
                     })
                 NavigationBarItem(
                     colors = NavigationBarItemDefaults.colors(
-                        selectedTextColor = Color.White,
-                        indicatorColor = Color.Transparent
+                        selectedTextColor = Color.White
                     ),
-                    selected = true,
+                    selected = biblioSelect.value==1,
                     onClick = {
+                        changeSelect("biblio")
                         navController.navigate("library")
                     },
                     label = { Text(text = "Bibliothèque") },
@@ -117,7 +152,9 @@ fun Home(){
     ) {
         NavHost(navController = navController, startDestination ="home", modifier = Modifier.padding(it)) {
             composable("home") {
+
                 Main()
+
             }
             composable("search") {
                 Search()

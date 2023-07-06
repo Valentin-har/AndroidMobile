@@ -69,6 +69,8 @@ fun Register( _snackBar:SnackbarHostState,navController: NavHostController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+            Text(text = "Enregistrer")
             IconButton(onClick = { }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_signin), contentDescription = ""
