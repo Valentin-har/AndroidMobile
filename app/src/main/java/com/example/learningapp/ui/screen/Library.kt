@@ -63,7 +63,6 @@ fun Library() {
             Card(
                 colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
                 onClick = { /*TODO*/ }, modifier = Modifier
-                    .weight(1f)
                     .padding(0.dp, 5.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -77,17 +76,70 @@ fun Library() {
                     Text(text = "   Titre likés", modifier = Modifier.weight(0.70f))
                 }
             }
+            Card(
+                colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
+                onClick = { /*TODO*/ }, modifier = Modifier
+                    .padding(0.dp, 5.dp)
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data("https://img.freepik.com/free-vector/flat-design-tattooed-old-people-illustration_23-2150279197.jpg?w=826&t=st=1688768143~exp=1688768743~hmac=2ac93227df1c33d6a65e209dfc36ec8965fc9ea254c8ef4fb0cd403824b3c219")
+                            .build(),
+                        contentDescription = "",
+                        modifier = Modifier.weight(0.30f)
+                    )
+                    Text(text = " Punk metal", modifier = Modifier.weight(0.70f))
+                }
+            }
+            Card(
+                colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
+                onClick = { /*TODO*/ }, modifier = Modifier
+                    .padding(0.dp, 5.dp)
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data("https://img.freepik.com/free-vector/sound-wave-equalizer-vector-design-set_53876-79097.jpg?w=826&t=st=1688768237~exp=1688768837~hmac=4dfa642da288706705b3005028e0a383dd81a46770c783386900bc0d2c88ff7d")
+                            .build(),
+                        contentDescription = "",
+                        modifier = Modifier.weight(0.30f)
+                    )
+                    Text(text = " Ma playlist", modifier = Modifier.weight(0.70f))
+                }
+            }
+            Card(
+                colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
+                onClick = { /*TODO*/ }, modifier = Modifier
+                    .padding(0.dp, 5.dp)
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data("https://img.freepik.com/free-photo/vintage-music_1048-3366.jpg?w=996&t=st=1688768585~exp=1688769185~hmac=35b50ea2557b14c8db9933fd507cc9f516370e1ca7f90ed160eb271150e7ce2e")
+                            .build(),
+                        contentDescription = "",
+                        modifier = Modifier.weight(0.30f)
+                    )
+                    Text(text = " Classic", modifier = Modifier.weight(0.70f))
+                }
+            }
+            Card(
+                colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
+                onClick = { /*TODO*/ }, modifier = Modifier
+                    .padding(0.dp, 5.dp)
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data("https://img.freepik.com/free-psd/watercolor-electronic-party-square-flyer_23-2149686550.jpg?w=826&t=st=1688768524~exp=1688769124~hmac=325298c441439c5e72fb7e6bfdfa453b37c09fe48e21debf1f78821680f9430f")
+                            .build(),
+                        contentDescription = "",
+                        modifier = Modifier.weight(0.30f)
+                    )
+                    Text(text = " Electro", modifier = Modifier.weight(0.70f))
+                }
+            }
         }
-
-
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                .build(), contentDescription = "", modifier = Modifier
-                .weight(0.10f)
-                .clip(
-                    CircleShape
-                )
-        )
     }
 }

@@ -30,16 +30,23 @@ import com.google.firebase.ktx.Firebase
 @Composable
 fun Home(){
 
-    var homeSelect=remember{
+    val homeSelect=remember{
         mutableStateOf<Int>(1)
     }
-    var searchSelect=remember{
+    val searchSelect=remember{
         mutableStateOf<Int>(0)
     }
-    var biblioSelect=remember{
+    val biblioSelect=remember{
         mutableStateOf<Int>(0)
     }
     val firebaseAuth = Firebase.auth;
+    fun getName(): String {
+        if(firebaseAuth.currentUser?.email !=null){
+            return firebaseAuth.currentUser?.email!!.split('@')[0]
+        }else{
+            return "unknow"
+        }
+    }
     fun changeSelect(name:String){
         when(name){
             "home"-> {
@@ -63,7 +70,7 @@ fun Home(){
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Bonjour "+firebaseAuth.currentUser?.email!!.split('@')[0], color = MaterialTheme.colorScheme.onPrimary) },
+                title = { Text(text = "Bonjour "+getName(), color = MaterialTheme.colorScheme.onPrimary) },
                 colors = TopAppBarDefaults.smallTopAppBarColors(
                     titleContentColor = MaterialTheme.colorScheme.primary,
                     containerColor = MaterialTheme.colorScheme.primary,
