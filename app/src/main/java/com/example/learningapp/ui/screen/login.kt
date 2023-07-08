@@ -63,7 +63,7 @@ fun Login(_snackBar:SnackbarHostState, navController: NavHostController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Connection")
+        Text(text = "Connexion")
         IconButton(onClick = { }) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_signin),
@@ -124,7 +124,7 @@ fun Login(_snackBar:SnackbarHostState, navController: NavHostController) {
                 }
             }
         }) {
-            Text(text = "connection")
+            Text(text = "Connexion")
         }
         Button(onClick = {
             navController.navigate("register")

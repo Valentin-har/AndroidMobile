@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -47,14 +48,13 @@ val colorList = mutableListOf<Color>(
     Color(0xFFb21147),
 )
 
-val categoryTitle = mutableListOf<String>(
+val categoryTitle = listOf<String>(
     "Podcasts",
     "Événéments live",
     "Conçu spécialement pour vous",
     "Dernières sorties",
     "Hip-Hop",
     "Pop",
-    "Variété Française",
     "Été",
     "Classements",
     "Latino",
@@ -78,25 +78,24 @@ fun selectColor(color: MutableList<Color>, colorUsed: MutableList<Color>): Color
     val pickedColor = color.random()
     color.remove(pickedColor)
     colorUsed.add(pickedColor)
-    println(pickedColor)
     return pickedColor
 }
 
 fun setCategoryTitle(title: MutableList<String>, titleUsed: MutableList<String>): String {
-    if (title.size == 0) {
-        title.addAll(titleUsed)
-        titleUsed.clear()
+    if (titleUsed.size == 0) {
+        titleUsed.addAll(title)
+        return setCategoryTitle(title, titleUsed)
+    }else{
+        val pickedTitle = titleUsed.random()
+        titleUsed.remove(pickedTitle)
+        return pickedTitle
     }
-    val pickedTitle = title.random()
-    title.remove(pickedTitle)
-    titleUsed.add(pickedTitle)
-    println(pickedTitle)
-    return pickedTitle
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Search() {
+    val categoryTitleTmp = categoryTitle
     Column(
         modifier = Modifier
             .padding(10.dp, 10.dp)
@@ -117,8 +116,9 @@ fun Search() {
                 )
             })
         Text(text = "Parcourir tout", modifier = Modifier.padding(0.dp, 5.dp))
+        val count = categoryTitle.size / 2
         LazyColumn() {
-            items(categoryTitle.size / 2) {
+            items(categoryTitle) {
                 Row(
                     modifier = Modifier
                         .padding(top = 10.dp, bottom = 10.dp)
@@ -126,7 +126,8 @@ fun Search() {
                 ) {
                     CategoryCard(
                         cardColor = selectColor(colorList, colorUsed),
-                        cardText = setCategoryTitle(categoryTitle, categoryTitleUsed),
+                        //cardText = setCategoryTitle(categoryTitle, categoryTitleTmp),
+                        cardText = it,
                         modifier = Modifier
                             .size(80.dp)
                             .padding(end = 10.dp)
@@ -134,7 +135,8 @@ fun Search() {
                     )
                     CategoryCard(
                         cardColor = selectColor(colorList, colorUsed),
-                        cardText = setCategoryTitle(categoryTitle, categoryTitleUsed),
+                        //cardText = setCategoryTitle(categoryTitle, categoryTitleTmp),
+                        cardText = it,
                         modifier = Modifier
                             .size(80.dp)
                             .padding(end = 10.dp)
@@ -142,7 +144,7 @@ fun Search() {
                     )
                 }
             }
-            if (categoryTitle.size % 2 == 1) {
+            /**if (categoryTitle.size % 2 == 1) {
                 items(1) {
                     Row(
                         modifier = Modifier
@@ -150,7 +152,8 @@ fun Search() {
                     ) {
                         CategoryCard(
                             cardColor = selectColor(colorList, colorUsed),
-                            cardText = setCategoryTitle(categoryTitle, categoryTitleUsed),
+                            //cardText = setCategoryTitle(categoryTitle, categoryTitleTmp),
+                            cardText = it,
                             modifier = Modifier
                                 .height(80.dp)
                                 .padding(end = 10.dp)
@@ -159,6 +162,7 @@ fun Search() {
                     }
                 }
             }
+             */
         }
     }
 }

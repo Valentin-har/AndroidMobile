@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
@@ -21,7 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 
@@ -58,7 +62,7 @@ fun Main() {
                         contentDescription = "",
                         modifier = Modifier.weight(0.30f)
                     )
-                    Text(text = "   Titre likés", modifier = Modifier.weight(0.70f))
+                    Text(text = "Titre likés", modifier = Modifier.weight(0.70f), textAlign = TextAlign.Center)
                 }
             }
             Card(
@@ -73,7 +77,7 @@ fun Main() {
                             .data("https://raplume.eu/wp-content/uploads/2021/09/PlaylistRap-1-770x770.jpg")
                             .build(), contentDescription = "", modifier = Modifier.weight(0.30f)
                     )
-                    Text(text = "   Playlist rap", modifier = Modifier.weight(0.70f))
+                    Text(text = "Playlist rap", modifier = Modifier.weight(0.70f), textAlign = TextAlign.Center)
                 }
             }
         }
@@ -90,7 +94,7 @@ fun Main() {
                             .data("https://i.scdn.co/image/ab67706f000000029f66e905e5e5d71e5fda6e9e")
                             .build(), contentDescription = "", modifier = Modifier.weight(0.30f)
                     )
-                    Text(text = "   Playlist electro", modifier = Modifier.weight(0.70f))
+                    Text(text = "Playlist electro", modifier = Modifier.weight(0.70f), textAlign = TextAlign.Center)
                 }
 
             }
@@ -106,7 +110,7 @@ fun Main() {
                             .data("https://i.scdn.co/image/ab67706f0000000237ddb11424d6babc80f304ac")
                             .build(), contentDescription = "", modifier = Modifier.weight(0.30f)
                     )
-                    Text(text = "   Playlist rock", modifier = Modifier.weight(0.70f))
+                    Text(text = "Playlist rock", modifier = Modifier.weight(0.70f), textAlign = TextAlign.Center)
                 }
             }
         }
@@ -123,7 +127,7 @@ fun Main() {
                             .data("https://i.scdn.co/image/ab67706f000000022a2d103b23aeb9314c586e7b")
                             .build(), contentDescription = "", modifier = Modifier.weight(0.30f)
                     )
-                    Text(text = "   Playlist reggae", modifier = Modifier.weight(0.70f))
+                    Text(text = "Playlist reggae", modifier = Modifier.weight(0.70f), textAlign = TextAlign.Center)
                 }
 
             }
@@ -139,18 +143,50 @@ fun Main() {
                             .data("https://i.scdn.co/image/ab67706f000000026903496e5a845f3ad87125a2")
                             .build(), contentDescription = "", modifier = Modifier.weight(0.30f)
                     )
-                    Text(text = "   Radio", modifier = Modifier.weight(0.70f))
+                    Text(text = "Radio", modifier = Modifier.weight(0.70f), textAlign = TextAlign.Center)
                 }
             }
         }
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data("https://www.aquaportail.com/pictures1106/phones/anemone-clown_1307889811-fleur.jpg%22")
-                .build(), contentDescription = "", modifier = Modifier
-                .weight(0.10f)
-                .clip(
-                    CircleShape
-                )
-        )
+        Text(text = "Artistes recommandés",  fontSize = 25.sp,modifier = Modifier.padding(0.dp, 35.dp))
+        val theOffsping = object {
+            val name = "The Offspring"
+            val image = "https://i.scdn.co/image/ab6761610000e5ebd7c5bbf32459922a72ec0d31"
+        }
+        val listArtist = listOf<Artist>(Artist("The Offsping", "https://i.scdn.co/image/ab6761610000e5ebd7c5bbf32459922a72ec0d31"),
+            Artist("Daft Punk", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi1UDJUAiPFtyZVPjG5KBxQM_IcSzrMvsSetbKyvJRiGiS_CiUIZXtZ4KRQ1GiKPLoL2U&usqp=CAU"),
+            Artist("Gazo", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPu9rM5LeFJjdfpkuUKuhFfOQlFiAOBNhR786aVXng4x-uPylRmPgjsrCLDVrdnO1ox5k&usqp=CAU"),
+            Artist("BTS", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8WFIWEk0LT2l_6dQWXUhXNL8Wqc5I_w33FMQC3i6LkLI6sX9SmTwN22rOKVH4f7uT_zQ&usqp=CAU"),
+            Artist("Imagine Dragon", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRITZe4oWuT8EAELayPr8lbaR_yWoMf88qJacLbFmIZIvaQQbEbvHF3CF8Mr7MQvuJJiPE&usqp=CAU"),
+            Artist("Muse", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUhlNFDhPCfK5B-vINSjkYoz84Irfnd0Fon4K8eua1XPgh3rlrVYsQohkf9A3YtKUC1eI&usqp=CAU"),
+            Artist("NTO", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTejwlh-IcxraVXc3uuueLWbYnuZNIbtguqNnC1rhW5iMFw7gZFfszRd4yuCLe6zKOrf88&usqp=CAU")
+            )
+       LazyRow(modifier = Modifier
+            .weight(1f)
+                , horizontalArrangement = Arrangement.spacedBy(1.dp)
+            ) {
+
+            items(listArtist) {
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+                    onClick = { /*TODO*/ }, modifier = Modifier
+                ){
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        AsyncImage(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(it.image)
+                                .build(), contentDescription = "", modifier = Modifier
+                                .weight(0.80f)
+                                .clip(CircleShape)
+                                .padding(
+                                    bottom = 15.dp
+                                )
+                                .width(300.dp)
+                                .height(350.dp)
+                        )
+                        Text(text = it.name, fontSize = 15.sp,textAlign = TextAlign.Center, modifier = Modifier.weight(0.20f))
+                    }
+                }
+            }
+        }
     }
 }
